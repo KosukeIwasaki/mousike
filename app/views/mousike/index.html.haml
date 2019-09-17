@@ -10,12 +10,12 @@
         %li.sideBar__userBox__logOut
           =fa_icon "sign-out"
     .sideBar__contentBoxes
-      .searchBox
+      .sideBar__contentBoxes__searchBox
         = "Contents"
         = "Title"
         = "Artists"
         = "Genre"
-      .playlistsBox
+      .sideBar__contentBoxes__playlistsBox
         = "Playlists"
   .musicPlayer
     .musicPlayer__albumWork
@@ -26,14 +26,20 @@
           =fa_icon "forward"
         %li.musicPlayer__musicComponents__stop
           =fa_icon "stop"
-        %li.musicPlayer__musicComponents__play
-          =fa_icon "play"
         %li.musicPlayer__musicComponents__pause
           =fa_icon "pause"
+        %li.musicPlayer__musicComponents__play
+          =fa_icon "play"
         %li.musicPlayer__musicComponents__backward
           =fa_icon "backward"
-        %li.li.musicPlayer__musicComponents__seekBar
-          
+        %li.musicPlayer__musicComponents__volume_down
+          =fa_icon "volume-down"
+        %li.musicPlayer__musicComponents__volume_controller
+          %input{type: 'range'}
+        %li.musicPlayer__musicComponents__volume_up
+          =fa_icon "volume-up"
+        %li.musicPlayer__musicComponents__seekBar
+          %input{type: 'range'}
     .musicPlayer__visualiser
   .musicLists
     %ul
