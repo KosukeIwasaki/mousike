@@ -1,0 +1,52 @@
+%body
+  .sideBar
+    .sideBar__userBox
+      = "ユーザー名"
+      = "e-mailアドレス"
+      = "参照フォルダ"
+      %ul
+        %li.sideBar__userBox__setting
+          =fa_icon "cog"
+        %li.sideBar__userBox__logOut
+          =fa_icon "sign-out"
+    .sideBar__contentBoxes
+      .searchBox
+        = "Contents"
+        = "Title"
+        = "Artists"
+        = "Genre"
+      .playlistsBox
+        = "Playlists"
+  .musicPlayer
+    .musicPlayer__albumWork
+    .musicPlayer__name_artists
+    .musicPlayer__musicComponents
+      %ul
+        %li.musicPlayer__musicComponents__Forward
+          =fa_icon "forward"
+        %li.musicPlayer__musicComponents__stop
+          =fa_icon "stop"
+        %li.musicPlayer__musicComponents__play
+          =fa_icon "play"
+        %li.musicPlayer__musicComponents__pause
+          =fa_icon "pause"
+        %li.musicPlayer__musicComponents__backward
+          =fa_icon "backward"
+        %li.li.musicPlayer__musicComponents__seekBar
+          
+    .musicPlayer__visualiser
+  .musicLists
+    %ul
+      %li.musicLists__jackets
+        = "jacket"
+      %li.musicLists__titles
+        = "titles"
+      %li.musicLists__artists
+        = "artists"
+      %li.musicLists__length
+        = "length"
+      %li.musicLists__genre
+        = "genre"
+      %li.musicLists__addresses
+        = "address"
+  .footerSetting
