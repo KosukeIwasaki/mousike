@@ -42,17 +42,60 @@
           %input{type: 'range'}
     .musicPlayer__visualiser
   .musicLists
-    %ul
-      %li.musicLists__jackets
-        = "jacket"
-      %li.musicLists__titles
-        = "titles"
-      %li.musicLists__artists
-        = "artists"
-      %li.musicLists__length
-        = "length"
-      %li.musicLists__genre
-        = "genre"
-      %li.musicLists__addresses
-        = "address"
+    -# %input#tableMusicLists{type: 'text'}
+    %table#MusicListsTable
+      %thead
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+      %tbody
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+    -# %ul
+    -#   %li.musicLists__jackets
+    -#     = "jacket"
+    -#   %li.musicLists__titles
+    -#     = "titles"
+    -#   %li.musicLists__artists
+    -#     = "artists"
+    -#   %li.musicLists__length
+    -#     = "length"
+    -#   %li.musicLists__genre
+    -#     = "genre"
+    -#   %li.musicLists__addresses
+    -#     = "address"
   .footerSetting
