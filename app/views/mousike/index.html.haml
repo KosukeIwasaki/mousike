@@ -1,0 +1,101 @@
+%body
+  .sideBar
+    .sideBar__userBox
+      = "ユーザー名"
+      = "e-mailアドレス"
+      = "参照フォルダ"
+      %ul
+        %li.sideBar__userBox__setting
+          =fa_icon "cog"
+        %li.sideBar__userBox__logOut
+          =fa_icon "sign-out"
+    .sideBar__contentBoxes
+      .sideBar__contentBoxes__searchBox
+        = "Contents"
+        = "Title"
+        = "Artists"
+        = "Genre"
+      .sideBar__contentBoxes__playlistsBox
+        = "Playlists"
+  .musicPlayer
+    .musicPlayer__albumWork
+    .musicPlayer__name_artists
+    .musicPlayer__musicComponents
+      %ul
+        %li.musicPlayer__musicComponents__Forward
+          =fa_icon "forward"
+        %li.musicPlayer__musicComponents__stop
+          =fa_icon "stop"
+        %li.musicPlayer__musicComponents__pause
+          =fa_icon "pause"
+        %li.musicPlayer__musicComponents__play
+          =fa_icon "play"
+        %li.musicPlayer__musicComponents__backward
+          =fa_icon "backward"
+        %li.musicPlayer__musicComponents__volume_down
+          =fa_icon "volume-down"
+        %li.musicPlayer__musicComponents__volume_controller
+          %input{type: 'range'}
+        %li.musicPlayer__musicComponents__volume_up
+          =fa_icon "volume-up"
+        %li.musicPlayer__musicComponents__seekBar
+          %input{type: 'range'}
+    .musicPlayer__visualiser
+  .musicLists
+    -# %input#tableMusicLists{type: 'text'}
+    %table#MusicListsTable
+      %thead
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+      %tbody
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+        %tr
+          %th
+            jackets
+          %th
+            titles
+          %th
+            artists
+          %th
+            length
+          %th
+            genre
+          %th
+            address
+    -# %ul
+    -#   %li.musicLists__jackets
+    -#     = "jacket"
+    -#   %li.musicLists__titles
+    -#     = "titles"
+    -#   %li.musicLists__artists
+    -#     = "artists"
+    -#   %li.musicLists__length
+    -#     = "length"
+    -#   %li.musicLists__genre
+    -#     = "genre"
+    -#   %li.musicLists__addresses
+    -#     = "address"
+  .footerSetting

@@ -1,0 +1,108 @@
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.sideBar {
+  position: absolute;
+  float: left;
+  width: 350px;
+  background-color: #06A230;
+  &__userBox {
+    height: 200px;
+    width: 300px;
+    margin: 25px;
+    background-color: #FFFFFF;
+  }
+  &__contentBoxes {
+    height: calc(100vh - 300px);
+    width: 300px;
+    margin: 50px 25px 25px;
+    background-color: #FFFFFF;
+    &__searchBox {
+      height: 25vh;
+      background-color: #54BE7C;
+    }
+    &__playlistsBox {
+      height: 30vh;
+      background-color: #FFFFFF;
+    }
+  }
+}
+
+.musicPlayer {
+  position: absolute;
+  height: 250px;
+  width: calc(100vw - 350px);
+  margin-left: 350px;
+  background-color: #54BE7C;
+  &__albumWork {
+    float: left;
+    height: 200px;
+    width: 200px;
+    margin: 25px 50px;
+    background-color: #FFFFFF;
+  }
+  &__name_artists {
+    float: left;
+    height: 60px;
+    width: 650px;
+    margin: 50px 0px 0px 0px;
+    background-color: #FFFFFF;
+  }
+  &__musicComponents ul li{
+    list-style-type: none;
+    float: left;
+    margin: 20px 20px;
+    font-size: 32px;
+    color: green;
+  }
+  &__musicComponents {
+    position: absolute;
+    top: 120px;
+    left: 300px;
+    height: 120px;
+    width: 650px;
+    &__seekBar input{
+      width: 650px;
+    }
+    &__seekBar {
+      margin: 0px !important;
+    }
+  }
+  &__visualiser {
+    height: 200px;
+    width: calc(100% - 1000px - 25px);
+    margin: 25px 25px;
+    margin-left: auto;
+    background-color: #FFFFFF;
+  }
+}
+
+.musicLists {
+  position: absolute;
+  height: calc(100vh - 250px);
+  width: calc(100vw - 350px);
+  margin-left: 350px;
+  margin-top: 250px;
+  background-color: #FFFFFF;
+}
+
+table#MusicListsTable {
+  height: calc(100vh - 250px);
+  width: calc(100vw - 350px);
+  background-color: darkgray;
+  color: #FFFFFF;
+  
+  // border-bottom-width: 10px;
+  & thead tr th {
+    border-color: #FFFFFF;
+    border: solid 2px #FFFFFF;
+    padding: 10px 50px 10px 10px;
+  }
+  & tbody tr th {
+    border-color: #FFFFFF;
+    border: solid 2px #FFFFFF;
+    // padding: 10px 50px 10px 10px;
+  }
+}
