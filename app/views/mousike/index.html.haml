@@ -20,6 +20,11 @@
   .musicPlayer
     .musicPlayer__albumWork
     .musicPlayer__name_artists
+      %label{for: 'file-upload-audio'}
+        SELECT AUDIO FILE：
+        %span#progress-file-upload-audio
+
+      %input#file-upload-audio{type: 'file'}
     .musicPlayer__musicComponents
       %ul
         %li.musicPlayer__musicComponents__Forward
