@@ -1,24 +1,54 @@
-# README
+#DB設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ER図
+![ER図](/db/ER--figure.jpg)
 
-Things you may want to cover:
+## usersテーブル
+|Column|Type|Options|
+|------|----|-------|
+|nickname|string|null: false, unique: true|
+|email|string|null: false, unique: true|
+|password|string|null: false, unique: true|
 
-* Ruby version
+### Association
+- has_many :tunes
+- has_many :playlists
 
-* System dependencies
+## tunesテーブル
+|Column|Type|Options|
+|------|----|-------|
+|albumart|text||
+|title|string|null: false|
+|artist|string|unique: true|
+|albumartist|string|unique: true|
+|length|integer|null: false|
+|genre|string|unique: true|
+|fileaddress|text|null: false, unique: true|
+|user_id|references|null: false, foreign_key: true|
 
-* Configuration
+### Association
+- belong_to :user
+- has_many :tunes_playlists
+- has_many :playlists, through: tunes_playlists
 
-* Database creation
+## playlistsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null: false|
+|user_id|references|null: false, foreign_key: true|
 
-* Database initialization
+### Association
+- belong_to :user
+- has_many :tunes_playlists
+- has_many :tunes, through: tunes_playlists
 
-* How to run the test suite
+## tunes_playlistsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null: false|
+|tunes_id|references|null: false, foreign_key: true|
+|playlists_id|references|null: false, foreign_key: true|
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Association
+- belong_to :tune
+- belong_to :playlist
