@@ -6,6 +6,7 @@ body {
 .sideBar {
   position: absolute;
   float: left;
+  height: 100%;
   width: 350px;
   background-color: #06A230;
   &__userBox {
@@ -17,7 +18,7 @@ body {
   &__contentBoxes {
     height: calc(100vh - 300px);
     width: 300px;
-    margin: 50px 25px 25px;
+    margin: 25px 25px 25px;
     background-color: #FFFFFF;
     &__searchBox {
       height: 25vh;
@@ -53,7 +54,7 @@ body {
   &__musicComponents ul li{
     list-style-type: none;
     float: left;
-    margin: 20px 20px;
+    margin: 20px 18px;
     font-size: 32px;
     color: green;
   }
@@ -62,9 +63,9 @@ body {
     top: 120px;
     left: 300px;
     height: 120px;
-    width: 650px;
+    width: 630px;
     &__seekBar input{
-      width: 650px;
+      width: 600px;
     }
     &__seekBar {
       margin: 0px !important;
