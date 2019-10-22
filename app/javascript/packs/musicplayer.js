@@ -16,7 +16,7 @@
       }
     };
 
-    let startAudio = function(arrayBuffer) {
+    let setAudio = function(arrayBuffer) {
 
       let successCallback = function(audioBuffer) {
       // audioBufferはAudioBufferのインスタンス
@@ -30,8 +30,7 @@
         // AudioBufferSourceNodeインスタンスを生成
         source = context.createBufferSource();
 
-        // 再生・停止のプレフィックス
-        source.start = source.start || source.noteOn;
+        // 停止のプレフィックス
         source.stop = source.stop || source.noteOff;
 
         // AudioBufferインスタンスを格納
@@ -45,9 +44,6 @@
 
         // AudioBufferSourceNode (Input) -> AudioDestinationNode (Output)
         source.connect(context.destination);
-
-        // 再生
-        source.start(0);
 
         // コールバック関数の設定
         source.onended = function(event) {
@@ -69,16 +65,6 @@
 
           return false;
         };
-
-        // var prototypes = {};
- 
-        // prototypes.AudioBufferSourceNode = Object.getPrototypeOf(source);                            // AudioBufferSourceNode instance -> AudioBufferSourceNode
-        // prototypes.AudioSourceNode = Object.getPrototypeOf(prototypes.AudioBufferSourceNode);  // AudioBufferSourceNode -> AudioSourceNode
-        // prototypes.AudioNode = Object.getPrototypeOf(prototypes.AudioSourceNode);        // AudioSourceNode -> AudioNode
-
-        // displayProperties(audioBuffer, 'audiobuffer-properties', 'AudioBuffer');
-        // displayProperties(source, 'audiobuffersourcenode-properties', 'AudioBufferSourceNode');
-        // // displayProperties(prototypes.AudioNode, 'audionode-properties', 'AudioNode');
       };
 
       // 処理が失敗した場合のエラー処理をするコールバック関数を指定する
@@ -89,6 +75,7 @@
           window.alert('Error : "decodeAudioData" method.');
         }
       };
+
       // AudioBufferインスタンスの生成
       context.decodeAudioData(arrayBuffer, successCallback, errorCallback);
     };
@@ -124,8 +111,8 @@
         // Success read
         reader.onload = function() {
           let arrayBuffer = reader.result;  // Get ArrayBuffer
-
-          startAudio(arrayBuffer);
+          
+          setAudio(arrayBuffer);
 
           uploader.value = '';
           progressArea.textContent = file.name;
@@ -135,6 +122,22 @@
         reader.readAsArrayBuffer(file);
       };
     }, false);
+
+    // 音楽の再生
+    document.getElementById("play").addEventListener('click', function(){
+      let reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      // 再生のプレフィックス
+      source.start = source.start || source.noteOn;
+      // 再生
+      source = context.createBufferSource();
+      // AudioBufferSourceNode (Input) -> AudioDestinationNode (Output)
+      source.connect(context.destination);
+      context.decodeAudioData(arrayBuffer, successCallback, errorCallback);
+
+      source.start(0);
+    });
+    
   };
 
   if ((document.readyStyle === 'interactive') || (document.readyState === 'complete')) {
@@ -142,4 +145,6 @@
   } else {
     document.addEventListener('DOMContentLoaded', onDOMContentLoaded, true);
   };
+
 })();
+
