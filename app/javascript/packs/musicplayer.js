@@ -125,16 +125,9 @@
 
     // 音楽の再生
     document.getElementById("play").addEventListener('click', function(){
-      let reader = new FileReader();
-      reader.readAsArrayBuffer(file);
       // 再生のプレフィックス
       source.start = source.start || source.noteOn;
       // 再生
-      source = context.createBufferSource();
-      // AudioBufferSourceNode (Input) -> AudioDestinationNode (Output)
-      source.connect(context.destination);
-      context.decodeAudioData(arrayBuffer, successCallback, errorCallback);
-
       source.start(0);
     });
     
