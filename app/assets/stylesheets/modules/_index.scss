@@ -51,24 +51,29 @@ body {
     margin: 50px 0px 0px 0px;
     background-color: #FFFFFF;
   }
-  &__musicComponents ul li{
-    list-style-type: none;
-    float: left;
-    margin: 20px 18px;
-    font-size: 32px;
-    color: green;
-  }
   &__musicComponents {
     position: absolute;
     top: 120px;
     left: 300px;
     height: 120px;
-    width: 630px;
-    &__seekBar input{
+    width: 650px;
+    &__seekBar {
+      width: 650px;
+      margin: 0px !important;
+      text-align: center;
+    }
+    &__seekBar input {
       width: 600px;
     }
-    &__seekBar {
-      margin: 0px !important;
+  }
+  &__musicComponents li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 20px 18px;
+    font-size: 32px;
+    color: green;
+    &:active {
+      transform: translateY(2px);
     }
   }
   &__visualiser {
