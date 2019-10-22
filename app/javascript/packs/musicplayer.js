@@ -30,9 +30,6 @@
         // AudioBufferSourceNodeインスタンスを生成
         source = context.createBufferSource();
 
-        // 停止のプレフィックス
-        source.stop = source.stop || source.noteOff;
-
         // AudioBufferインスタンスを格納
         source.buffer = audioBuffer;
 
@@ -51,20 +48,18 @@
           document.onkeydown = null;
           // 停止
           source.stop(0);
-          console.log('STOP by "on' + event.type + '"event handler !!');
         };
 
-        document.onkeydown = function(event) {
-          // space ?
-          if (event.keyCode !== 32) {
-            return;
-          }
+        // document.onkeydown = function(event) {
+        //   // space ?
+        //   if (event.keyCode !== 32) {
+        //     return;
+        //   }
+        //   // execute onended event handler
+        //   trigger();
+        //   return false;
+        // }
 
-          // execute onended event handler
-          trigger();
-
-          return false;
-        };
       };
 
       // 処理が失敗した場合のエラー処理をするコールバック関数を指定する
@@ -129,6 +124,14 @@
       source.start = source.start || source.noteOn;
       // 再生
       source.start(0);
+    });
+
+    // 音楽の停止
+    document.getElementById("stop").addEventListener('click', function(){
+      // 停止のプレフィックス
+      source.stop = source.stop || source.noteOff;
+      // 再生
+      source.stop(0);
     });
     
   };
