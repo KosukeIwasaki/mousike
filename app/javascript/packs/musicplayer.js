@@ -130,7 +130,7 @@
     document.getElementById("stop").addEventListener('click', function(){
       // 停止のプレフィックス
       source.stop = source.stop || source.noteOff;
-      // 再生
+      // 停止
       source.stop(0);
     });
     
