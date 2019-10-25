@@ -28,23 +28,31 @@
     .musicPlayer__musicComponents
       %ul
         %li.musicPlayer__musicComponents__Forward
-          =fa_icon "backward"
+          =fa_icon "backward", {id: "backward"}
         %li.musicPlayer__musicComponents__stop
           =fa_icon "stop", {id: "stop"}
         %li.musicPlayer__musicComponents__pause
-          =fa_icon "pause"
+          =fa_icon "pause", {id: "pause"}
         %li.musicPlayer__musicComponents__play
           =fa_icon "play", {id: "play"}
         %li.musicPlayer__musicComponents__backward
-          =fa_icon "forward"
-        %li.musicPlayer__musicComponents__volume_down
-          =fa_icon "volume-down"
-        %li.musicPlayer__musicComponents__volume_controller
-          %input{type: 'range'}
-        %li.musicPlayer__musicComponents__volume_up
-          =fa_icon "volume-up"
+          =fa_icon "forward", {id: "forward"}
+        %li.musicPlayer__musicComponents__volume-down
+          =fa_icon "volume-down", {id: "volume-down"}
+        %li.musicPlayer__musicComponents__volume-controller
+          %input{type: 'range', id: "volume-range"}
+        %li.musicPlayer__musicComponents__volume-up
+          =fa_icon "volume-up", {id: "volume-up"}
         %li.musicPlayer__musicComponents__seekBar
-          %input{type: 'range'}
+          %input{type: 'range', id: "seekbar"}
+        .musicPlayer__musicComponents__current-time
+          %span{id: "currentTime"}
+            00:00:00
+        .musicPlayer__musicComponents__music-time
+          %span{id: "musicTime"}
+            00:00:00
+
+
     .musicPlayer__visualiser
   .musicLists
     -# %input#tableMusicLists{type: 'text'}
