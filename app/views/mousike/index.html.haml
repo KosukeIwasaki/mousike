@@ -12,6 +12,7 @@
           参照フォルダ
       %ul
         %li.side-bar__user-box__log-out
+          = link_to "ログアウト", destroy_user_session_path, method: :delete
           =fa_icon "sign-out"
         %li.side-bar__user-box__setting
           =fa_icon "cog"
