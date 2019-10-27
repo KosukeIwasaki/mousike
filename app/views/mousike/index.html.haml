@@ -3,10 +3,10 @@
     .side-bar__user-box
       .side-bar__user-box__user-name
         %p
-          ユーザー名
+          = current_user.nickname
       .side-bar__user-box__email
         %p
-          e-mailアドレス
+          = current_user.email
       .side-bar__user-box__reference-folder
         %p
           参照フォルダ
