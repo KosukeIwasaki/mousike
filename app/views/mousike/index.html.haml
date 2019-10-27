@@ -1,58 +1,64 @@
 %body
-  .sideBar
-    .sideBar__userBox
-      = "ユーザー名"
-      = "e-mailアドレス"
-      = "参照フォルダ"
+  .side-bar
+    .side-bar__user-box
+      .side-bar__user-box__user-name
+        %p
+          ユーザー名
+      .side-bar__user-box__email
+        %p
+          e-mailアドレス
+      .side-bar__user-box__reference-folder
+        %p
+          参照フォルダ
       %ul
-        %li.sideBar__userBox__setting
-          =fa_icon "cog"
-        %li.sideBar__userBox__logOut
+        %li.side-bar__user-box__log-out
           =fa_icon "sign-out"
-    .sideBar__contentBoxes
-      .sideBar__contentBoxes__searchBox
+        %li.side-bar__user-box__setting
+          =fa_icon "cog"
+    .side-bar__content-boxes
+      .side-bar__content-boxes__search-box
         = "Contents"
         = "Title"
         = "Artists"
         = "Genre"
-      .sideBar__contentBoxes__playlistsBox
+      .side-bar__content-boxes__playlists-box
         = "Playlists"
-  .musicPlayer
-    .musicPlayer__albumWork
-    #name_artists.musicPlayer__name_artists
+  .music-player
+    .music-player__album-work
+    #name_artists.music-player__name_artists
 
-    .musicPlayer__musicComponents
+    .music-player__music-components
       %ul
-        %li.musicPlayer__musicComponents__Forward
+        %li.music-player__music-components__forward
           =fa_icon "step-backward", {id: "step-backward"}
-        %li.musicPlayer__musicComponents__stop
+        %li.music-player__music-components__stop
           =fa_icon "stop", {id: "stop"}
-        %li.musicPlayer__musicComponents__pause#pause
+        %li.music-player__music-components__pause#pause
           =fa_icon "pause", {id: "pause"}
-        %li.musicPlayer__musicComponents__play#play
+        %li.music-player__music-components__play#play
           =fa_icon "play", {id: "play"}
-        %li.musicPlayer__musicComponents__backward
+        %li.music-player__music-components__backward
           =fa_icon "step-forward", {id: "step-forward"}
-        %li.musicPlayer__musicComponents__volume-down
+        %li.music-player__music-components__volume-down
           =fa_icon "volume-down", {id: "volume-down"}
-        %li.musicPlayer__musicComponents__volume-controller
+        %li.music-player__music-components__volume-controller
           %input{type: 'range', id: "volume-range", min: 0.0, max: 1.0, value: 0.8, step: 0.01}
-        %li.musicPlayer__musicComponents__volume-up
+        %li.music-player__music-components__volume-up
           =fa_icon "volume-up", {id: "volume-up"}
-        %li.musicPlayer__musicComponents__seekBar
+        %li.music-player__music-components__seekBar
           %progress{id: "seek-bar", max: 100.0, value: 0.0}
-        .musicPlayer__musicComponents__current-time
+        .music-player__music-components__current-time
           %span{id: "current-time"}
             00:00:00
-        .musicPlayer__musicComponents__music-time
+        .music-player__music-components__music-time
           %span{id: "music-time"}
             00:00:00
 
 
-    .musicPlayer__visualiser
+    .music-player__visualiser
       %input#file-upload-audio{type: 'file', accept: "audio/*", multiple: true}
-  .musicLists
-    %table#MusicListsTable
+  .music-lists
+    %table#music-lists-table
       %thead
         %tr
           %th
@@ -67,7 +73,7 @@
             genre
           %th
             address
-      %tbody#musicListsTunes
+      %tbody#music-lists-tunes
         %tr
           %th
             jackets
@@ -94,17 +100,4 @@
             genre
           %th
             address
-    -# %ul
-    -#   %li.musicLists__jackets
-    -#     = "jacket"
-    -#   %li.musicLists__titles
-    -#     = "titles"
-    -#   %li.musicLists__artists
-    -#     = "artists"
-    -#   %li.musicLists__length
-    -#     = "length"
-    -#   %li.musicLists__genre
-    -#     = "genre"
-    -#   %li.musicLists__addresses
-    -#     = "address"
-  .footerSetting
+  .footer-setting
