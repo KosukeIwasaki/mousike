@@ -20,13 +20,11 @@
   .musicPlayer
     .musicPlayer__albumWork
     #name_artists.musicPlayer__name_artists
-      -# %label{for: 'file-upload-audio'}
-      -#   SELECT AUDIO FILE：
-      -#   %span#progress-file-upload-audio
+
     .musicPlayer__musicComponents
       %ul
         %li.musicPlayer__musicComponents__Forward
-          =fa_icon "backward", {id: "backward"}
+          =fa_icon "step-backward", {id: "step-backward"}
         %li.musicPlayer__musicComponents__stop
           =fa_icon "stop", {id: "stop"}
         %li.musicPlayer__musicComponents__pause#pause
@@ -34,7 +32,7 @@
         %li.musicPlayer__musicComponents__play#play
           =fa_icon "play", {id: "play"}
         %li.musicPlayer__musicComponents__backward
-          =fa_icon "forward", {id: "forward"}
+          =fa_icon "step-forward", {id: "step-forward"}
         %li.musicPlayer__musicComponents__volume-down
           =fa_icon "volume-down", {id: "volume-down"}
         %li.musicPlayer__musicComponents__volume-controller

@@ -194,6 +194,26 @@ let stop = function() {
   }
 }
 
+// 次の楽曲へ
+let stepForward = function() {
+  if(listNum < list.length - 1) {
+    stop();
+    clearPlayer();
+    listNum++;    
+    play();
+  };
+}
+
+// 前の楽曲へ
+let stepBackward = function() {
+  if(listNum > 0) {
+    stop();
+    clearPlayer();
+    listNum--;
+    play();
+  };
+}
+
 // // リピート
 // let player_repeat = function() {
 //   if(repeatFlag) {
@@ -230,5 +250,13 @@ window.addEventListener("DOMContentLoaded", function() {
   // 音量の変更
   document.getElementById("volume-range").addEventListener('change', function(){
     changeVolume();
+  });
+  // 次の楽曲へ
+  document.getElementById("step-forward").addEventListener('click', function(){
+    stepForward();
+  });
+  // 次の楽曲へ
+  document.getElementById("step-backward").addEventListener('click', function(){
+    stepBackward();
   });
 }, false);
