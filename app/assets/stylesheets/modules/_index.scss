@@ -110,7 +110,6 @@ table#MusicListsTable {
   width: calc(100vw - 350px);
   background-color: darkgray;
   color: #FFFFFF;
-  
   // border-bottom-width: 10px;
   & thead tr th {
     border-color: #FFFFFF;
@@ -120,6 +119,7 @@ table#MusicListsTable {
   & tbody tr th {
     border-color: #FFFFFF;
     border: solid 2px #FFFFFF;
-    // padding: 10px 50px 10px 10px;
+    text-align: left;
+    padding: 10px 0px 10px 10px; 
   }
 }

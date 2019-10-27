@@ -52,7 +52,6 @@
     .musicPlayer__visualiser
       %input#file-upload-audio{type: 'file', accept: "audio/*", multiple: true}
   .musicLists
-    -# %input#tableMusicLists{type: 'text'}
     %table#MusicListsTable
       %thead
         %tr
@@ -68,7 +67,7 @@
             genre
           %th
             address
-      %tbody
+      %tbody#musicListsTunes
         %tr
           %th
             jackets

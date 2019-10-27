@@ -13,6 +13,7 @@ let volumeControl = null;
 
 // AudioContextの作成
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
+source.stop = source.stop || source.noteOff;
 let context = new AudioContext();
 context.createGain = context.createGain || context.createGainNode;
 
@@ -156,7 +157,6 @@ let input = function() {
   };
   document.getElementById("name_artists").innerHTML = audioName[listNum];
 }
-
 
 // プレイヤーの処理
 // 再生
