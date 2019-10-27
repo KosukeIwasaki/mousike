@@ -13,7 +13,6 @@ let volumeControl = null;
 
 // AudioContextの作成
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-source.stop = source.stop || source.noteOff;
 let context = new AudioContext();
 context.createGain = context.createGain || context.createGainNode;
 
@@ -100,6 +99,7 @@ let sound = function(buffer) {
   let source = context.createBufferSource();
   volumeControl.connect(context.destination);
   source.buffer = buffer;
+  source.stop = source.stop || source.noteOff;
 
   if(!playing) {
     // 初めて音を再生する際、再生開始時のcontext.currentTimeが0とは限らないため取得
