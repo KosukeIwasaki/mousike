@@ -57,16 +57,18 @@ body {
     left: 300px;
     height: 120px;
     width: 650px;
+    text-align: center;
+    letter-spacing: -0.4em;
     &__seekBar {
       width: 650px;
       margin: 0px !important;
-      text-align: center;
     }
     &__seekBar progress {
       width: 600px;
     }
     &__current-time, &__music-time {
       margin-top: 10px;
+      letter-spacing: normal;
     }
     &__current-time {
       float: left;
