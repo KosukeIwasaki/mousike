@@ -19,33 +19,38 @@
         = "Playlists"
   .musicPlayer
     .musicPlayer__albumWork
-    .musicPlayer__name_artists
-      %label{for: 'file-upload-audio'}
-        SELECT AUDIO FILE：
-        %span#progress-file-upload-audio
+    #name_artists.musicPlayer__name_artists
 
-      %input#file-upload-audio{type: 'file'}
     .musicPlayer__musicComponents
       %ul
         %li.musicPlayer__musicComponents__Forward
-          =fa_icon "backward"
+          =fa_icon "step-backward", {id: "step-backward"}
         %li.musicPlayer__musicComponents__stop
           =fa_icon "stop", {id: "stop"}
-        %li.musicPlayer__musicComponents__pause
-          =fa_icon "pause"
-        %li.musicPlayer__musicComponents__play
+        %li.musicPlayer__musicComponents__pause#pause
+          =fa_icon "pause", {id: "pause"}
+        %li.musicPlayer__musicComponents__play#play
           =fa_icon "play", {id: "play"}
         %li.musicPlayer__musicComponents__backward
-          =fa_icon "forward"
-        %li.musicPlayer__musicComponents__volume_down
-          =fa_icon "volume-down"
-        %li.musicPlayer__musicComponents__volume_controller
-          %input{type: 'range'}
-        %li.musicPlayer__musicComponents__volume_up
-          =fa_icon "volume-up"
+          =fa_icon "step-forward", {id: "step-forward"}
+        %li.musicPlayer__musicComponents__volume-down
+          =fa_icon "volume-down", {id: "volume-down"}
+        %li.musicPlayer__musicComponents__volume-controller
+          %input{type: 'range', id: "volume-range", min: 0.0, max: 1.0, value: 0.8, step: 0.01}
+        %li.musicPlayer__musicComponents__volume-up
+          =fa_icon "volume-up", {id: "volume-up"}
         %li.musicPlayer__musicComponents__seekBar
-          %input{type: 'range'}
+          %progress{id: "seek-bar", max: 100.0, value: 0.0}
+        .musicPlayer__musicComponents__current-time
+          %span{id: "current-time"}
+            00:00:00
+        .musicPlayer__musicComponents__music-time
+          %span{id: "music-time"}
+            00:00:00
+
+
     .musicPlayer__visualiser
+      %input#file-upload-audio{type: 'file', accept: "audio/*", multiple: true}
   .musicLists
     %table#MusicListsTable
       %thead

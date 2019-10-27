@@ -48,22 +48,33 @@ body {
     float: left;
     height: 60px;
     width: 650px;
-    margin: 50px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
     background-color: #FFFFFF;
   }
   &__musicComponents {
     position: absolute;
-    top: 120px;
+    top: 90px;
     left: 300px;
     height: 120px;
     width: 650px;
+    text-align: center;
+    letter-spacing: -0.4em;
     &__seekBar {
       width: 650px;
       margin: 0px !important;
-      text-align: center;
     }
-    &__seekBar input {
+    &__seekBar progress {
       width: 600px;
+    }
+    &__current-time, &__music-time {
+      margin-top: 10px;
+      letter-spacing: normal;
+    }
+    &__current-time {
+      float: left;
+    }
+    &__music-time {
+      float: right;
     }
   }
   &__musicComponents li {
