@@ -4,3 +4,15 @@
 @import "./modules/variable";
 @import "./modules/devise";
 @import "./modules/index";
+
+#error_explanation {
+  color: red;
+  & ul {
+    margin: 10px;
+  }
+  & ul li {
+    margin-left: 10px;
+    line-height: 1.5;
+    list-style-type: none;
+  }
+}
