@@ -1,0 +1,47 @@
+.user-box {
+  height: 80%;
+  width: 80%;
+  margin: 50px auto 100px;
+  padding: 20px 50px 50px;
+  border: 3px solid #06A230;
+  & p {
+    text-align: center;
+    margin: 15px 0px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #06A230;
+  }
+  &__link {
+    @include link-action;
+  }
+  &__form-box {
+    padding: 50px;
+    border: 2px solid darkgray;
+    &__input-box {
+      display: table;
+      margin: 0px auto;
+      &__field {
+        display: inline-block;
+        margin: 10px 0px 15px;
+        color: #06A230;
+        & input {
+          height: 25px;
+          width: 200px;
+        }
+        &:nth-child(2) {
+          margin-left: 310px;
+        }
+        &:nth-child(5) {
+          margin-left: 185px;
+        }
+      }
+    }
+    &__actions {
+      text-align: right;
+      & input {
+        padding: 10px;
+        font-size: 30px;
+      }
+    }
+  }
+}
