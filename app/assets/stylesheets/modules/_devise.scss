@@ -24,7 +24,7 @@
         display: inline-block;
         margin: 10px 0px 15px;
         color: #06A230;
-        & input {
+        & input:not(#user_remember_me) {
           height: 25px;
           width: 200px;
         }
