@@ -5,3 +5,10 @@
     clear: both;
   }
 }
+
+@mixin link-action {
+  & a {
+    text-decoration: none;
+    color: #06A230;
+  }
+}
