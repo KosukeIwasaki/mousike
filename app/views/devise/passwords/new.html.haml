@@ -5,10 +5,6 @@
     .user-box__form-box
       .user-box__form-box__input-box
         .user-box__form-box__input-box__field
-          = f.label :nickname
-          %br/
-          = f.text_field :nickname, autofocus: true, autocomplete: "nickname"
-        .user-box__form-box__input-box__field
           = f.label :email
           %br/
           = f.email_field :email, autofocus: true, autocomplete: "email"

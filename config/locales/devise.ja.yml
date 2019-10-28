@@ -71,6 +71,6 @@ ja:
               taken: "は既に登録されています"
             password:
               blank: "が入力されていません"
+              too_short: "が短すぎます。６文字以上で入力してください。"
             password_confirmation:
               confirmation: "が異なっています"
-      
