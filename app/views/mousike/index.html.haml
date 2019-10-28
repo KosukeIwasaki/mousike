@@ -22,12 +22,12 @@
         = "Title"
         = "Artists"
         = "Genre"
+        %input#file-upload-audio{type: 'file', accept: "audio/*", multiple: true}
       .side-bar__content-boxes__playlists-box
         = "Playlists"
   .music-player
     .music-player__album-work
     #name_artists.music-player__name_artists
-
     .music-player__music-components
       %ul
         %li.music-player__music-components__forward
@@ -54,51 +54,26 @@
         .music-player__music-components__music-time
           %span{id: "music-time"}
             00:00:00
-
-
     .music-player__visualiser
-      %input#file-upload-audio{type: 'file', accept: "audio/*", multiple: true}
   .music-lists
     %table#music-lists-table
       %thead
         %tr
           %th
-            jackets
-          %th
             titles
           %th
             artists
           %th
+            album artists
+          %th
             length
           %th
             genre
-          %th
-            address
       %tbody#music-lists-tunes
-        %tr
-          %th
-            jackets
-          %th
-            titles
-          %th
-            artists
-          %th
-            length
-          %th
-            genre
-          %th
-            address
-        %tr
-          %th
-            jackets
-          %th
-            titles
-          %th
-            artists
-          %th
-            length
-          %th
-            genre
-          %th
-            address
+        %tr#record
+          %th#title
+          %th#artists
+          %th#albumArtists
+          %th#length
+          %th#genre
   .footer-setting

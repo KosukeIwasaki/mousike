@@ -5,13 +5,11 @@ body {
 }
 
 .side-bar {
-  // position: absolute;
   float: left;
   height: 100vh;
   width: 350px;
   background-color: #06A230;
   &__user-box {
-    // position: relative;
     height: 200px;
     width: 300px;
     margin: 25px;
@@ -129,11 +127,13 @@ table#music-lists-table {
   width: calc(100vw - 350px);
   background-color: darkgray;
   color: #FFFFFF;
+  overflow: scroll;
   // border-bottom-width: 10px;
   & thead tr th {
     border-color: #FFFFFF;
     border: solid 2px #FFFFFF;
-    padding: 10px 50px 10px 10px;
+    text-align: center;
+    padding: 10px 0px;
   }
   & tbody tr th {
     border-color: #FFFFFF;

@@ -156,6 +156,23 @@ let input = function() {
     };
   };
   document.getElementById("name_artists").innerHTML = audioName[listNum];
+
+  // 取得したファイルをテーブルに表示する
+  document.getElementById('music-lists-tunes').textContent = null;
+
+  for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
+    let tr = document.createElement("tr");
+    let th = document.createElement("th");
+
+    tr.setAttribute("id", "record" + String(j));
+    th.setAttribute("id", "title");
+
+    tr.innerHTML = "";
+    th.innerHTML = audioName[j];
+
+    document.getElementById("music-lists-tunes").appendChild(tr);
+    document.getElementById("record" + String(j)).appendChild(th);
+  }
 }
 
 // プレイヤーの処理
