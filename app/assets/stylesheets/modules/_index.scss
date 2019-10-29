@@ -115,30 +115,46 @@ body {
 
 .music-lists {
   position: absolute;
-  height: calc(100vh - 250px);
-  width: calc(100vw - 350px);
-  margin-left: 350px;
-  margin-top: 250px;
+  top: 250px;
+  left: 350px;
   background-color: #FFFFFF;
+  table#music-lists-table {
+    height: calc(100vh - 250px);
+    width: calc(100vw - 350px);
+    display: block;
+    overflow-x: scroll;
+    white-space: nowrap;
+    background-color: darkgray;
+    color: #FFFFFF;
+    & tbody {
+      & th#title {
+        min-width: calc((100vw - 350px) * 0.3);
+      }
+      & th#artists {
+        min-width: calc((100vw - 350px) * 0.15);
+      }
+      & th#album-artists {
+        min-width: calc((100vw - 350px) * 0.3);
+      }
+      & th#length {
+        min-width: calc((100vw - 350px) * 0.1);
+      }
+      & th#genre {
+        min-width: calc((100vw - 350px) * 0.12);
+      }
+    }
+    & thead tr th {
+      border-color: #FFFFFF;
+      border: solid 2px #FFFFFF;
+      text-align: center;
+      padding: 10px 0px;
+    }
+    & tbody tr th {
+      border-color: #FFFFFF;
+      border: solid 2px #FFFFFF;
+      text-align: left;
+      padding: 10px 0px 10px 10px;
+    }
+  }
 }
 
-table#music-lists-table {
-  height: calc(100vh - 250px);
-  width: calc(100vw - 350px);
-  background-color: darkgray;
-  color: #FFFFFF;
-  overflow: scroll;
-  // border-bottom-width: 10px;
-  & thead tr th {
-    border-color: #FFFFFF;
-    border: solid 2px #FFFFFF;
-    text-align: center;
-    padding: 10px 0px;
-  }
-  & tbody tr th {
-    border-color: #FFFFFF;
-    border: solid 2px #FFFFFF;
-    text-align: left;
-    padding: 10px 0px 10px 10px; 
-  }
-}

@@ -164,14 +164,15 @@ let input = function() {
     let tr = document.createElement("tr");
     let th = document.createElement("th");
 
-    tr.setAttribute("id", "record" + String(j));
+    tr.setAttribute("id", "record");
+    tr.setAttribute("id", "data-" + String(j));
     th.setAttribute("id", "title");
 
     tr.innerHTML = "";
     th.innerHTML = audioName[j];
 
     document.getElementById("music-lists-tunes").appendChild(tr);
-    document.getElementById("record" + String(j)).appendChild(th);
+    document.getElementById("data-" + String(j)).appendChild(th);
   }
 }
 
