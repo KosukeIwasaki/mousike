@@ -144,6 +144,171 @@ let sound = function(buffer) {
   };
 };
 
+// flacファイルのメタデータの取得
+// データの配列から1バイトIntegerを取り出す
+function data_int1(data) {
+  return data[i_data++];
+}
+
+// データの配列から2バイトIntegerを取り出す
+function data_int2(data) {
+  let val = (data[i_data] << 8) | data[i_data + 1];
+  i_data += 2
+  return val;
+}
+
+// データの配列から3バイトIntegerを取り出す
+function data_int3(data) {
+  let val = (data[i_data] << 16) | (data[i_data + 1] << 8) | data[i_data + 2];
+  i_data += 3
+  return val;
+}
+
+// データの配列から4バイトInteger を取り出す
+// 結果のMSBが1の場合，Integerの値としては負になる
+function data_int4(data) {
+  let val = (data[i_data] << 24) | (data[i_data + 1] << 16) | (data[i_data + 2] << 8) | data[i_data + 3];
+  i_data += 4
+  return val;
+}
+
+// データの配列からlittle endianの4バイトIntegerを取り出す
+// 結果のMSBが1の場合、Integerの値としては負になる
+function data_int4_le(data) {
+  let val = data[i_data] | (data[i_data + 1] << 8) | (data[i_data + 2] << 16) | (data[i_data + 3] << 24);
+  i_data += 4;
+  return val;
+}
+
+// UTF-8 → UTF-16変換
+function utf8to16(utf8) {
+  let utf16 = "";
+  for(let i = 0; i < utf8.length; ) {
+    let c = utf8.charCodeAt(i);
+    if     ((c & 0xe0) == 0xc0) {
+      utf16 += String.fromCharCode(((c & 0x1f) << 6) | utf8.charCodeAt(i + 1) & 0x3f);
+      i += 2;
+    }
+    else if((c & 0xf0) == 0xe0) {
+      utf16 += String.fromCharCode(((c & 0x0f) << 12) | ((utf8.charCodeAt(i + 1) & 0x3f) << 6)
+                                    | utf8.charCodeAt(i + 2) & 0x3f);
+      i += 3;
+    }
+    else {
+      utf16 += utf8[i++];
+    }
+  }
+  return utf16;
+}
+
+// METADATA_BLOCK
+// メタデータの取得
+function get_metadata(data) {
+  if(data.length < 4)
+    return -1;
+  i_data = 0;
+  if(data_int4(data) != 0x664c6143) { // fLaCかどうかを判定
+    return;
+  }
+
+  for(; ; ) {
+    let i;
+
+    // METADATA_BLOCK_HEADER
+    if(i_data + 4 > data.length){
+      return false;
+    }
+
+    let flg_typ = data_int1(data);
+    let len = data_int3(data);
+    if(i_data + len > data.length) {
+      return -1;
+    }
+
+    // METADATA_BLOCK_DATA
+    switch(flg_typ & 0x7f) {  // BLOCK_TYPE
+
+    case 4:  // VORBIS_COMMENT
+      // 曲タイトル，アーティスト名を取得
+      let i_skip = i_data + len;
+
+      if(len < 4) {
+        return false;
+      }
+
+      if((len = data_int4_le(data)) & 0x80000000) { // vendor_length
+        return false;
+      }
+      if(i_data + len > data.length) {
+        return false;
+      }
+
+      i_data += len;  // vendor_string
+
+      if(i_data + 4 > data.length) {
+        return false;
+      }
+
+      let n_comments = data_int4_le(data);  // user_comment_list_length
+      if(n_comments & 0x80000000) {
+        return false;
+      }
+      
+      // 
+      let f = 0x3;
+      for(i = 0; i < n_comments; i++) {
+        if(i_data + 4 > data.length) {
+          return false;
+        }
+        if((len = data_int4_le(data)) & 0x80000000) {  // length
+          return false;
+        }
+        if(i_data + len > data.length) {
+          return false;
+        }
+
+        let comment = "";
+        for(; len; len--) {
+          comment += String.fromCharCode(data[i_data++]);
+        }
+
+        console.log(comment)
+
+        // if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
+        //   document.getElementById("name1").textContent = utf8to16(comment.substr(6));
+        //   f &= ~0x1;
+        // }
+        // if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
+        //   document.getElementById("name3").textContent = utf8to16(comment.substr(6));
+        //   f &= ~0x2;
+        // }
+        // if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
+        //   document.getElementById("name2").textContent = utf8to16(comment.substr(7));
+        //   f &= ~0x3;
+        // }
+      }
+
+      i_data = i_skip;
+      break;
+
+    case 6:
+
+
+    case 127:
+      return -1;
+
+    default:
+      i_data += len;
+    }
+
+    if(flg_typ & 0x80)  // last metadata block
+      break;
+  }
+
+  return 0;
+
+}
+
 // ファイルの読み込み
 let input = function() {
   clearPlayer();
@@ -161,6 +326,18 @@ let input = function() {
   document.getElementById('music-lists-tunes').textContent = null;
 
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
+    // let k = Number(document.getElementById("file-upload-audio").files.length - j)
+    file_reader = new FileReader();
+    let file = document.getElementById("file-upload-audio").files[j];
+    file_reader.readAsArrayBuffer(file);
+    file_reader.onload = function() {
+      let value = file_reader.result;
+      data = new Uint8Array(value);
+      console.log("get_metadata start");
+      get_metadata(data);
+      console.log("get_metadata finish");
+    }
+
     let tr = document.createElement("tr");
     let th = document.createElement("th");
 
@@ -174,6 +351,17 @@ let input = function() {
     document.getElementById("music-lists-tunes").appendChild(tr);
     document.getElementById("data-" + String(j)).appendChild(th);
   }
+
+  // file_reader = new FileReader();
+  // let file = document.getElementById("file-upload-audio").files[0];
+  // file_reader.readAsArrayBuffer(file);
+  // file_reader.onload = function() {
+  //   let value = file_reader.result;
+  //   data = new Uint8Array(value);
+  //   console.log("get_metadata start");
+  //   get_metadata(data);
+  //   console.log("get_metadata finish");
+
 }
 
 // プレイヤーの処理
