@@ -324,14 +324,22 @@ let input = function() {
 
   // 取得したファイルをテーブルに表示する
   document.getElementById('music-lists-tunes').textContent = null;
-
+  let fileReader = []
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
-    // let k = Number(document.getElementById("file-upload-audio").files.length - j)
-    file_reader = new FileReader();
-    let file = document.getElementById("file-upload-audio").files[j];
-    file_reader.readAsArrayBuffer(file);
-    file_reader.onload = function() {
-      let value = file_reader.result;
+    fileReader[j] = "fileReader" + String(j);
+  }
+  
+
+  for(let k = 0; k < document.getElementById("file-upload-audio").files.length; k++) {
+    let l = Number(document.getElementById("file-upload-audio").files.length - k)
+    console.log(l);
+
+    fileReader[k] = new FileReader();
+    let file = document.getElementById("file-upload-audio").files[k];
+    fileReader[k].readAsArrayBuffer(file);
+    console.log(fileReader[k]);
+    fileReader[k].onload = function() {
+      let value = fileReader[k].result;
       data = new Uint8Array(value);
       console.log("get_metadata start");
       get_metadata(data);
@@ -342,14 +350,14 @@ let input = function() {
     let th = document.createElement("th");
 
     tr.setAttribute("id", "record");
-    tr.setAttribute("id", "data-" + String(j));
+    tr.setAttribute("id", "data-" + String(k));
     th.setAttribute("id", "title");
 
     tr.innerHTML = "";
-    th.innerHTML = audioName[j];
+    th.innerHTML = audioName[k];
 
     document.getElementById("music-lists-tunes").appendChild(tr);
-    document.getElementById("data-" + String(j)).appendChild(th);
+    document.getElementById("data-" + String(k)).appendChild(th);
   }
 
   // file_reader = new FileReader();
