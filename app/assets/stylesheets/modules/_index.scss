@@ -126,34 +126,37 @@ body {
     white-space: nowrap;
     background-color: darkgray;
     color: #FFFFFF;
-    & tbody {
-      & th#title {
+    & thead {
+      & tr th#head-titles {
         min-width: calc((100vw - 350px) * 0.3);
       }
-      & th#artists {
+      & tr th#head-artists {
         min-width: calc((100vw - 350px) * 0.15);
       }
-      & th#album-artists {
+      & tr th#head-album-artists {
         min-width: calc((100vw - 350px) * 0.3);
       }
-      & th#length {
+      & tr th#head-length {
         min-width: calc((100vw - 350px) * 0.1);
       }
-      & th#genre {
-        min-width: calc((100vw - 350px) * 0.12);
+      & tr th#head-genres {
+        min-width: calc((100vw - 350px) * 0.1425);
+        // min-width: calc((100vw - 350px) * 0.119475);
       }
     }
-    & thead tr th {
+    & tr th {
       border-color: #FFFFFF;
       border: solid 2px #FFFFFF;
       text-align: center;
       padding: 10px 0px;
     }
-    & tbody tr th {
-      border-color: #FFFFFF;
-      border: solid 2px #FFFFFF;
-      text-align: left;
-      padding: 10px 0px 10px 10px;
+    & tbody {
+      & tr td {
+        border-color: #FFFFFF;
+        border: solid 2px #FFFFFF;
+        text-align: left;
+        padding: 10px 0px 10px 10px;
+      }
     }
   }
 }

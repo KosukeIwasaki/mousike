@@ -272,20 +272,29 @@ function get_metadata(data) {
           comment += String.fromCharCode(data[i_data++]);
         }
 
-        console.log(comment)
+        // console.log(comment)
 
-        // if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
-        //   document.getElementById("name1").textContent = utf8to16(comment.substr(6));
-        //   f &= ~0x1;
-        // }
-        // if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
-        //   document.getElementById("name3").textContent = utf8to16(comment.substr(6));
-        //   f &= ~0x2;
-        // }
-        // if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
-        //   document.getElementById("name2").textContent = utf8to16(comment.substr(7));
-        //   f &= ~0x3;
-        // }
+        if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
+          document.getElementById("title").textContent = utf8to16(comment.substr(6));
+          f &= ~0x1;
+        }
+        if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
+          document.getElementById("artists").textContent = utf8to16(comment.substr(7));
+          f &= ~0x2;
+        }
+        if(comment.substr(0, 12).toUpperCase() == "ALBUMARTIST=") {
+          document.getElementById("album-artists").textContent = utf8to16(comment.substr(12));
+          f &= ~0x3;
+        }
+        if(comment.substr(0, 7).toUpperCase() == "LENGTH=") {
+          document.getElementById("length").textContent = utf8to16(comment.substr(7));
+          f &= ~0x4;
+        }
+        if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
+          document.getElementById("genre").textContent = utf8to16(comment.substr(6));
+          f &= ~0x5;
+        }
+        
       }
 
       i_data = i_skip;
@@ -323,52 +332,67 @@ let input = function() {
   document.getElementById("name_artists").innerHTML = audioName[listNum];
 
   // 取得したファイルをテーブルに表示する
-  document.getElementById('music-lists-tunes').textContent = null;
+  // document.getElementById('music-lists-tunes').textContent = null;
   let fileReader = []
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
     fileReader[j] = "fileReader" + String(j);
   }
-  
 
+  let musicTable = document.getElementById('music-lists-tunes');
+  let row = musicTable.insertRow(-1);
+  row.id = 'record';
+  let titleCell = row.insertCell(-1);
+  titleCell.id = 'title';
+  let artistsCell = row.insertCell(-1);
+  artistsCell.id = 'artists';
+  let albumArtistsCell = row.insertCell(-1);
+  albumArtistsCell.id = 'album-artists';
+  let lengthCell = row.insertCell(-1);
+  lengthCell.id = 'length';
+  let genreCell = row.insertCell(-1);
+  genreCell.id = 'genre';
+
+  // titleCell.innerHTML = `<td id="title"></td>`;
+  // artistsCell.innerHTML = "<td></td>";
+  // albumArtistsCell.innerHTML = "<td></td>";
+  // lengthCell.innerHTML = "<td></td>";
+  // genreCell.innerHTML = "<td></td>";
+
+  console.log(titleCell.innerHTML);
+  
   for(let k = 0; k < document.getElementById("file-upload-audio").files.length; k++) {
     let l = Number(document.getElementById("file-upload-audio").files.length - k)
-    console.log(l);
+    // console.log(l);
 
     fileReader[k] = new FileReader();
     let file = document.getElementById("file-upload-audio").files[k];
     fileReader[k].readAsArrayBuffer(file);
-    console.log(fileReader[k]);
+    // console.log(fileReader[k]);
     fileReader[k].onload = function() {
       let value = fileReader[k].result;
       data = new Uint8Array(value);
-      console.log("get_metadata start");
+      // console.log("get_metadata start");
       get_metadata(data);
-      console.log("get_metadata finish");
+      // console.log("get_metadata finish");
     }
 
-    let tr = document.createElement("tr");
-    let th = document.createElement("th");
+    // let tr = document.createElement("tr");
+    // let th = document.createElement("th");
 
-    tr.setAttribute("id", "record");
-    tr.setAttribute("id", "data-" + String(k));
-    th.setAttribute("id", "title");
+    // tr.setAttribute("class", "record");
+    // tr.setAttribute("id", "data-" + String(k));
+    // th.setAttribute("id", "title");
+    // th.setAttribute("id", "artists");
+    // th.setAttribute("id", "album-artists");
+    // th.setAttribute("id", "length");
+    // th.setAttribute("id", "genre");
 
-    tr.innerHTML = "";
-    th.innerHTML = audioName[k];
+    // tr.innerHTML = "";
+    // th.innerHTML = audioName[k];
 
-    document.getElementById("music-lists-tunes").appendChild(tr);
-    document.getElementById("data-" + String(k)).appendChild(th);
+    // document.getElementById("music-lists-tunes").appendChild(tr);
+    // document.getElementById("data-" + String(k)).appendChild(th);
   }
-
-  // file_reader = new FileReader();
-  // let file = document.getElementById("file-upload-audio").files[0];
-  // file_reader.readAsArrayBuffer(file);
-  // file_reader.onload = function() {
-  //   let value = file_reader.result;
-  //   data = new Uint8Array(value);
-  //   console.log("get_metadata start");
-  //   get_metadata(data);
-  //   console.log("get_metadata finish");
 
 }
 

@@ -58,23 +58,23 @@
   .music-lists
     %table#music-lists-table
       %thead
-        %tr
-          %th
+        %tr#head-record
+          %th#head-titles
             titles
-          %th
+          %th#head-artists
             artists
-          %th
+          %th#head-album-artists
             album artists
-          %th
+          %th#head-length
             length
-          %th
+          %th#head-genres
             genre
       %tbody#music-lists-tunes
-        %tr#record
-          %th#title
-          %th#artists
-          %th#album-artists
-          %th#length
-          %th#genre
+        -# %tr#record
+        -#   %th#title
+        -#   %th#artists
+        -#   %th#album-artists
+        -#   %th#length
+        -#   %th#genre
           
   .footer-setting
