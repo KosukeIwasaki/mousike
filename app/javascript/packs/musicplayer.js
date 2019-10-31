@@ -338,7 +338,7 @@ let input = function() {
   let fileReader = []
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
     fileReader[j] = "fileReader" + String(j);
-  };
+  }
   document.getElementById('music-lists-tunes').textContent = null;
   
   for(let k = 0; k < document.getElementById("file-upload-audio").files.length; k++) {
@@ -366,9 +366,7 @@ let input = function() {
       data = new Uint8Array(value);
       get_metadata(data, k);
     };
-
-  };
-
+  }
 };
 
 // プレイヤーの処理
@@ -404,7 +402,7 @@ let stop = function() {
     stopping = true;
     soundFile.stop(0);
     clearPlayer();
-  };
+  }
 };
 
 // 次の楽曲へ
