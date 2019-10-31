@@ -10,6 +10,8 @@ let stopping = true;
 let repeatFlag = false;
 let listNum = 0;
 let volumeControl = null;
+let addCounts = false;
+let tuneCounts = 0;
 
 // AudioContextの作成
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -203,7 +205,8 @@ function utf8to16(utf8) {
 
 // METADATA_BLOCK
 // メタデータの取得
-function get_metadata(data) {
+function get_metadata(data, k) {
+  
   if(data.length < 4)
     return -1;
   i_data = 0;
@@ -228,90 +231,119 @@ function get_metadata(data) {
     // METADATA_BLOCK_DATA
     switch(flg_typ & 0x7f) {  // BLOCK_TYPE
 
-    case 4:  // VORBIS_COMMENT
-      // 曲タイトル，アーティスト名を取得
-      let i_skip = i_data + len;
+      case 4:  // VORBIS_COMMENT
+        // 曲タイトル，アーティスト名を取得
+        let i_skip = i_data + len;
 
-      if(len < 4) {
-        return false;
-      }
-
-      if((len = data_int4_le(data)) & 0x80000000) { // vendor_length
-        return false;
-      }
-      if(i_data + len > data.length) {
-        return false;
-      }
-
-      i_data += len;  // vendor_string
-
-      if(i_data + 4 > data.length) {
-        return false;
-      }
-
-      let n_comments = data_int4_le(data);  // user_comment_list_length
-      if(n_comments & 0x80000000) {
-        return false;
-      }
-      
-      // 
-      let f = 0x3;
-      for(i = 0; i < n_comments; i++) {
-        if(i_data + 4 > data.length) {
+        if(len < 4) {
           return false;
         }
-        if((len = data_int4_le(data)) & 0x80000000) {  // length
+
+        if((len = data_int4_le(data)) & 0x80000000) { // vendor_length
           return false;
         }
         if(i_data + len > data.length) {
           return false;
         }
 
-        let comment = "";
-        for(; len; len--) {
-          comment += String.fromCharCode(data[i_data++]);
+        i_data += len;  // vendor_string
+
+        if(i_data + 4 > data.length) {
+          return false;
         }
 
-        // console.log(comment)
-
-        if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
-          document.getElementById("title").textContent = utf8to16(comment.substr(6));
-          f &= ~0x1;
-        }
-        if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
-          document.getElementById("artists").textContent = utf8to16(comment.substr(7));
-          f &= ~0x2;
-        }
-        if(comment.substr(0, 12).toUpperCase() == "ALBUMARTIST=") {
-          document.getElementById("album-artists").textContent = utf8to16(comment.substr(12));
-          f &= ~0x3;
-        }
-        if(comment.substr(0, 7).toUpperCase() == "LENGTH=") {
-          document.getElementById("length").textContent = utf8to16(comment.substr(7));
-          f &= ~0x4;
-        }
-        if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
-          document.getElementById("genre").textContent = utf8to16(comment.substr(6));
-          f &= ~0x5;
+        let n_comments = data_int4_le(data);  // user_comment_list_length
+        if(n_comments & 0x80000000) {
+          return false;
         }
         
-      }
+        // 
+        let f = 0x3;
+        for(i = 0; i < n_comments; i++) {
+          if(i_data + 4 > data.length) {
+            return false;
+          }
+          if((len = data_int4_le(data)) & 0x80000000) {  // length
+            return false;
+          }
+          if(i_data + len > data.length) {
+            return false;
+          }
 
-      i_data = i_skip;
-      break;
+          let comment = "";
+          for(; len; len--) {
+            comment += String.fromCharCode(data[i_data++]);
+          }
 
-    case 6:
+          // console.log(comment)
+          console.log(addCounts);
+
+          // まだ楽曲を追加していない場合
+          if(!addCounts) {
+            m = k + 1;
+
+            if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
+              document.getElementById("title" + String(m)).textContent = utf8to16(comment.substr(6));
+              f &= ~0x1;
+            }
+            if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
+              document.getElementById("artists" + String(m)).textContent = utf8to16(comment.substr(7));
+              f &= ~0x2;
+            }
+            if(comment.substr(0, 12).toUpperCase() == "ALBUMARTIST=") {
+              document.getElementById("album-artists" + String(m)).textContent = utf8to16(comment.substr(12));
+              f &= ~0x3;
+            }
+            if(comment.substr(0, 7).toUpperCase() == "LENGTH=") {
+              document.getElementById("length" + String(m)).textContent = utf8to16(comment.substr(7));
+              f &= ~0x4;
+            }
+            if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
+              document.getElementById("genre" + String(m)).textContent = utf8to16(comment.substr(6));
+              f &= ~0x5;
+            }
+          } else {  // すでに追加済みの場合
+            m = tuneCounts + k + 1;
+            if(comment.substr(0, 6).toUpperCase() == "TITLE=") {
+              document.getElementById("title" + String(m)).textContent = utf8to16(comment.substr(6));
+              f &= ~0x1;
+            }
+            if(comment.substr(0, 7).toUpperCase() == "ARTIST=") {
+              document.getElementById("artists" + String(m)).textContent = utf8to16(comment.substr(7));
+              f &= ~0x2;
+            }
+            if(comment.substr(0, 12).toUpperCase() == "ALBUMARTIST=") {
+              document.getElementById("album-artists" + String(m)).textContent = utf8to16(comment.substr(12));
+              f &= ~0x3;
+            }
+            if(comment.substr(0, 7).toUpperCase() == "LENGTH=") {
+              document.getElementById("length" + String(m)).textContent = utf8to16(comment.substr(7));
+              f &= ~0x4;
+            }
+            if(comment.substr(0, 6).toUpperCase() == "GENRE=") {
+              document.getElementById("genre" + String(m)).textContent = utf8to16(comment.substr(6));
+              f &= ~0x5;
+            }
+          }
+        }
+
+        i_data = i_skip;
+        break;
+
+      case 6:
 
 
-    case 127:
-      return -1;
+      case 127:
+        return -1;
 
-    default:
-      i_data += len;
+      default:
+        i_data += len;
+
     }
 
-    if(flg_typ & 0x80)  // last metadata block
-      break;
+    // if(flg_typ & 0x80) { // last metadata block
+    //   break;
+    // }
   }
 
   return 0;
@@ -320,6 +352,7 @@ function get_metadata(data) {
 
 // ファイルの読み込み
 let input = function() {
+  console.log(addCounts);
   clearPlayer();
   list = [];
   audioName = [];
@@ -332,68 +365,75 @@ let input = function() {
   document.getElementById("name_artists").innerHTML = audioName[listNum];
 
   // 取得したファイルをテーブルに表示する
-  // document.getElementById('music-lists-tunes').textContent = null;
   let fileReader = []
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
     fileReader[j] = "fileReader" + String(j);
-  }
+  };
 
-  let musicTable = document.getElementById('music-lists-tunes');
-  let row = musicTable.insertRow(-1);
-  row.id = 'record';
-  let titleCell = row.insertCell(-1);
-  titleCell.id = 'title';
-  let artistsCell = row.insertCell(-1);
-  artistsCell.id = 'artists';
-  let albumArtistsCell = row.insertCell(-1);
-  albumArtistsCell.id = 'album-artists';
-  let lengthCell = row.insertCell(-1);
-  lengthCell.id = 'length';
-  let genreCell = row.insertCell(-1);
-  genreCell.id = 'genre';
-
-  // titleCell.innerHTML = `<td id="title"></td>`;
-  // artistsCell.innerHTML = "<td></td>";
-  // albumArtistsCell.innerHTML = "<td></td>";
-  // lengthCell.innerHTML = "<td></td>";
-  // genreCell.innerHTML = "<td></td>";
-
-  console.log(titleCell.innerHTML);
+  // let musicTable = document.getElementById('music-lists-tunes');
+  // let row = musicTable.insertRow(-1);
+  // row.id = 'record';
+  // let titleCell = row.insertCell(-1);
+  // titleCell.id = 'title';
+  // let artistsCell = row.insertCell(-1);
+  // artistsCell.id = 'artists';
+  // let albumArtistsCell = row.insertCell(-1);
+  // albumArtistsCell.id = 'album-artists';
+  // let lengthCell = row.insertCell(-1);
+  // lengthCell.id = 'length';
+  // let genreCell = row.insertCell(-1);
+  // genreCell.id = 'genre';
   
   for(let k = 0; k < document.getElementById("file-upload-audio").files.length; k++) {
     let l = Number(document.getElementById("file-upload-audio").files.length - k)
-    // console.log(l);
+    // 追加した楽曲の数を保存する
+    tuneCounts++;
+
+    if(!addCounts) {  // まだ楽曲を追加していない場合
+      let musicTable = document.getElementById('music-lists-tunes');
+      let row = musicTable.insertRow(-1);
+      row.id = 'record' + String(k+1);
+      let titleCell = row.insertCell(-1);
+      titleCell.id = 'title' + String(k+1);
+      let artistsCell = row.insertCell(-1);
+      artistsCell.id = 'artists' + String(k+1);
+      let albumArtistsCell = row.insertCell(-1);
+      albumArtistsCell.id = 'album-artists' + String(k+1);
+      let lengthCell = row.insertCell(-1);
+      lengthCell.id = 'length' + String(k+1);
+      let genreCell = row.insertCell(-1);
+      genreCell.id = 'genre' + String(k+1);
+    } else {  //すでに楽曲を追加した場合
+      let musicTable = document.getElementById('music-lists-tunes');
+      let row = musicTable.insertRow(-1);
+      row.id = 'record' + String(tuneCounts+k+1);
+      let titleCell = row.insertCell(-1);
+      titleCell.id = 'title' + String(tuneCounts+k+1);
+      let artistsCell = row.insertCell(-1);
+      artistsCell.id = 'artists' + String(tuneCounts+k+1);
+      let albumArtistsCell = row.insertCell(-1);
+      albumArtistsCell.id = 'album-artists' + String(tuneCounts+k+1);
+      let lengthCell = row.insertCell(-1);
+      lengthCell.id = 'length' + String(tuneCounts+k+1);
+      let genreCell = row.insertCell(-1);
+      genreCell.id = 'genre' + String(tuneCounts+k+1);
+    };
 
     fileReader[k] = new FileReader();
     let file = document.getElementById("file-upload-audio").files[k];
     fileReader[k].readAsArrayBuffer(file);
-    // console.log(fileReader[k]);
     fileReader[k].onload = function() {
       let value = fileReader[k].result;
       data = new Uint8Array(value);
       // console.log("get_metadata start");
-      get_metadata(data);
+      get_metadata(data, k);
       // console.log("get_metadata finish");
-    }
+    };
+  };
 
-    // let tr = document.createElement("tr");
-    // let th = document.createElement("th");
-
-    // tr.setAttribute("class", "record");
-    // tr.setAttribute("id", "data-" + String(k));
-    // th.setAttribute("id", "title");
-    // th.setAttribute("id", "artists");
-    // th.setAttribute("id", "album-artists");
-    // th.setAttribute("id", "length");
-    // th.setAttribute("id", "genre");
-
-    // tr.innerHTML = "";
-    // th.innerHTML = audioName[k];
-
-    // document.getElementById("music-lists-tunes").appendChild(tr);
-    // document.getElementById("data-" + String(k)).appendChild(th);
-  }
-
+  // 楽曲を追加したかどうかを判定する
+  addCounts = true;
+  
 }
 
 // プレイヤーの処理
