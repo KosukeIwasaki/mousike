@@ -63,8 +63,9 @@ body {
   &__name_artists {
     float: left;
     height: 60px;
-    width: 650px;
+    width: 640px;
     margin-top: 25px;
+    padding-left: 10px;
     line-height: 60px;
     background-color: #FFFFFF;
   }
@@ -126,12 +127,15 @@ body {
     white-space: nowrap;
     background-color: darkgray;
     color: #FFFFFF;
+    &:hover {
+      cursor: default;
+    }
     & thead {
       & tr th#head-ID {
         min-width: calc((100vw - 350px) * 0.03);
       }
       & tr th#head-titles {
-        min-width: calc((100vw - 350px) * 0.3);
+        min-width: calc((100vw - 350px) * 0.25);
       }
       & tr th#head-artists {
         min-width: calc((100vw - 350px) * 0.15);
@@ -140,7 +144,7 @@ body {
         min-width: calc((100vw - 350px) * 0.15);
       }
       & tr th#head-album-artists {
-        min-width: calc((100vw - 350px) * 0.3);
+        min-width: calc((100vw - 350px) * 0.25);
       }
       & tr th#head-length {
         min-width: calc((100vw - 350px) * 0.1);
@@ -156,6 +160,9 @@ body {
       padding: 10px 0px;
     }
     & tbody {
+      &:hover {
+        cursor: pointer;
+      }
       & tr td {
         border-color: #FFFFFF;
         border: solid 2px #FFFFFF;
