@@ -5,13 +5,11 @@ body {
 }
 
 .side-bar {
-  // position: absolute;
   float: left;
   height: 100vh;
   width: 350px;
   background-color: #06A230;
   &__user-box {
-    // position: relative;
     height: 200px;
     width: 300px;
     margin: 25px;
@@ -65,8 +63,9 @@ body {
   &__name_artists {
     float: left;
     height: 60px;
-    width: 650px;
+    width: 640px;
     margin-top: 25px;
+    padding-left: 10px;
     line-height: 60px;
     background-color: #FFFFFF;
   }
@@ -117,28 +116,63 @@ body {
 
 .music-lists {
   position: absolute;
-  height: calc(100vh - 250px);
-  width: calc(100vw - 350px);
-  margin-left: 350px;
-  margin-top: 250px;
+  top: 250px;
+  left: 350px;
   background-color: #FFFFFF;
+  table#music-lists-table {
+    height: calc(100vh - 250px);
+    width: calc(100vw - 350px);
+    display: block;
+    overflow-x: scroll;
+    white-space: nowrap;
+    background-color: darkgray;
+    color: #FFFFFF;
+    &:hover {
+      cursor: default;
+    }
+    & thead {
+      & tr th#head-ID {
+        min-width: calc((100vw - 350px) * 0.03);
+      }
+      & tr th#head-titles {
+        min-width: calc((100vw - 350px) * 0.25);
+      }
+      & tr th#head-artists {
+        min-width: calc((100vw - 350px) * 0.15);
+      }
+      & tr th#head-album {
+        min-width: calc((100vw - 350px) * 0.15);
+      }
+      & tr th#head-album-artists {
+        min-width: calc((100vw - 350px) * 0.25);
+      }
+      & tr th#head-length {
+        min-width: calc((100vw - 350px) * 0.1);
+      }
+      & tr th#head-genres {
+        min-width: calc((100vw - 350px) * 0.1425);
+      }
+    }
+    & tr th {
+      border-color: #FFFFFF;
+      border: solid 2px #FFFFFF;
+      text-align: center;
+      padding: 10px 0px;
+    }
+    & tbody {
+      &:hover {
+        cursor: pointer;
+      }
+      & tr td {
+        border-color: #FFFFFF;
+        border: solid 2px #FFFFFF;
+        text-align: left;
+        padding: 10px 10px 10px 10px;
+      }
+    }
+  }
 }
 
-table#music-lists-table {
-  height: calc(100vh - 250px);
-  width: calc(100vw - 350px);
-  background-color: darkgray;
-  color: #FFFFFF;
-  // border-bottom-width: 10px;
-  & thead tr th {
-    border-color: #FFFFFF;
-    border: solid 2px #FFFFFF;
-    padding: 10px 50px 10px 10px;
-  }
-  & tbody tr th {
-    border-color: #FFFFFF;
-    border: solid 2px #FFFFFF;
-    text-align: left;
-    padding: 10px 0px 10px 10px; 
-  }
+.active {
+  background-color: rgb(154, 240, 187);
 }
