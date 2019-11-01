@@ -284,6 +284,10 @@ function get_metadata(data, k) {
             document.getElementById("artists" + String(m)).textContent = utf8to16(comment.substr(7));
             f &= ~0x2;
           }
+          if(comment.substr(0, 6).toUpperCase() == "ALBUM=") {
+            document.getElementById("album" + String(m)).textContent = utf8to16(comment.substr(6));
+            f &= ~0x1;
+          }
           if(comment.substr(0, 12).toUpperCase() == "ALBUMARTIST=") {
             document.getElementById("album-artists" + String(m)).textContent = utf8to16(comment.substr(12));
             f &= ~0x3;
@@ -352,6 +356,8 @@ let input = function() {
     titleCell.id = 'title' + String(k+1);
     let artistsCell = row.insertCell(-1);
     artistsCell.id = 'artists' + String(k+1);
+    let albumCell = row.insertCell(-1);
+    albumCell.id = 'album' + String(k+1);
     let albumArtistsCell = row.insertCell(-1);
     albumArtistsCell.id = 'album-artists' + String(k+1);
     let lengthCell = row.insertCell(-1);
@@ -377,12 +383,6 @@ let input = function() {
       play(this.id-1);
     }, false);
   };
-
-  // // リストのダブルクリックで音楽の再生
-  // document.getElementsByClassName("tune-record").addEventListener('dblclick', function(){
-  //   console.log("ok");
-  //   // play();
-  // });
 
 };
 
@@ -491,14 +491,3 @@ window.addEventListener("DOMContentLoaded", function() {
     stepBackward();
   });
 }, false);
-
-// // リストのダブルクリックで音楽の再生
-// document(document).on('dblclick', document.getElementsByClassName("tune-record"), function(){
-//   console.log("ok");
-// })
-
-// リストのダブルクリックで音楽の再生
-// document.getElementsByClassName("tune-record").addEventListener('dblclick', function(){
-//   console.log("ok");
-//   play();
-// });

@@ -133,6 +133,9 @@ body {
       & tr th#head-artists {
         min-width: calc((100vw - 350px) * 0.15);
       }
+      & tr th#head-album {
+        min-width: calc((100vw - 350px) * 0.15);
+      }
       & tr th#head-album-artists {
         min-width: calc((100vw - 350px) * 0.3);
       }
