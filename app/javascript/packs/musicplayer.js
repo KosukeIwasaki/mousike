@@ -346,7 +346,8 @@ let input = function() {
 
     let musicTable = document.getElementById('music-lists-tunes');
     let row = musicTable.insertRow(-1);
-    row.id = 'record' + String(k+1);
+    row.id = k+1;
+    document.getElementById(k+1).classList.add("tune-record");
     let titleCell = row.insertCell(-1);
     titleCell.id = 'title' + String(k+1);
     let artistsCell = row.insertCell(-1);
@@ -366,12 +367,28 @@ let input = function() {
       data = new Uint8Array(value);
       get_metadata(data, k);
     };
-  }
+  };
+
+  // リストのダブルクリックで音楽の再生
+  let tuneRecord = document.getElementsByClassName("tune-record");
+  for (var n = 0; n < tuneRecord.length; n++) {
+    tuneRecord[n].addEventListener("dblclick", function() {
+      stop(listNum);
+      play(this.id-1);
+    }, false);
+  };
+
+  // // リストのダブルクリックで音楽の再生
+  // document.getElementsByClassName("tune-record").addEventListener('dblclick', function(){
+  //   console.log("ok");
+  //   // play();
+  // });
+
 };
 
 // プレイヤーの処理
 // 再生
-let play = function() {
+let play = function(listNum) {
   if(!playing || pausing) {
     let bgm = list[listNum];
     getAudioBuffer(bgm, function(buffer) {
@@ -384,8 +401,7 @@ let play = function() {
       });
     });
     document.getElementById("name_artists").innerHTML = audioName[listNum];
-    console.log(listNum);
-    document.getElementById("record"+String(listNum+1)).classList.add("active")
+    document.getElementById(String(listNum+1)).classList.add("active")
   };
 };
 
@@ -397,35 +413,35 @@ let pause = function() {
 };
 
 // 停止
-let stop = function() {
+let stop = function(listNum) {
   if (soundFile != null) {
-    playing = false;
+    playing = false
     pausing = false;
     stopping = true;
     soundFile.stop(0);
     clearPlayer();
 
-    document.getElementById("record"+String(listNum+1)).classList.remove("active")
+    document.getElementById(String(listNum+1)).classList.remove("active")
   }
 };
 
 // 次の楽曲へ
 let stepForward = function() {
   if(listNum < list.length - 1) {
-    stop();
+    stop(listNum);
     clearPlayer();
     listNum++;    
-    play();
+    play(listNum);
   };
 };
 
 // 前の楽曲へ
 let stepBackward = function() {
   if(listNum > 0) {
-    stop();
+    stop(listNum);
     clearPlayer();
     listNum--;
-    play();
+    play(listNum);
   };
 };
 
@@ -452,11 +468,11 @@ window.addEventListener("DOMContentLoaded", function() {
   });
   // 音楽の再生
   document.getElementById("play").addEventListener('click', function(){
-    play();
+    play(listNum);
   });
   // 音楽の停止
   document.getElementById("stop").addEventListener('click', function(){
-    stop();
+    stop(listNum);
   });
   // 音楽の一時停止
   document.getElementById("pause").addEventListener('click', function(){
@@ -475,3 +491,14 @@ window.addEventListener("DOMContentLoaded", function() {
     stepBackward();
   });
 }, false);
+
+// // リストのダブルクリックで音楽の再生
+// document(document).on('dblclick', document.getElementsByClassName("tune-record"), function(){
+//   console.log("ok");
+// })
+
+// リストのダブルクリックで音楽の再生
+// document.getElementsByClassName("tune-record").addEventListener('dblclick', function(){
+//   console.log("ok");
+//   play();
+// });
