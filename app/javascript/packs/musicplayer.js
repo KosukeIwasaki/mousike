@@ -325,7 +325,7 @@ let input = function() {
   let fileReader = [];
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
     fileReader[j] = "fileReader" + String(j);
-  };
+  }
   document.getElementById('music-lists-tunes').textContent = null;
   
   for(let k = 0; k < document.getElementById("file-upload-audio").files.length; k++) {
@@ -361,7 +361,7 @@ let input = function() {
         document.getElementById('length' + String(k+1)).innerHTML = parseTime(buffer.duration);
       });
     };
-  };
+  }
 
   // リストのダブルクリックで音楽の再生（最初のページ読み込み時にtune-recordが存在しないため、ここで作成）
   let tuneRecord = document.getElementsByClassName("tune-record");
@@ -371,7 +371,7 @@ let input = function() {
       listNum = this.id - 1;
       play(this.id-1);
     }, false);
-  };
+  }
 
 };
 
