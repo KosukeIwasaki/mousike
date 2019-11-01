@@ -352,6 +352,9 @@ let input = function() {
     let row = musicTable.insertRow(-1);
     row.id = k+1;
     document.getElementById(k+1).classList.add("tune-record");
+    let IDCell = row.insertCell(-1);
+    IDCell.id = 'ID' + String(k+1);
+    IDCell.textContent = k + 1;
     let titleCell = row.insertCell(-1);
     titleCell.id = 'title' + String(k+1);
     let artistsCell = row.insertCell(-1);

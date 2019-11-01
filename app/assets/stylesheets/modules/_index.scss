@@ -127,6 +127,9 @@ body {
     background-color: darkgray;
     color: #FFFFFF;
     & thead {
+      & tr th#head-ID {
+        min-width: calc((100vw - 350px) * 0.03);
+      }
       & tr th#head-titles {
         min-width: calc((100vw - 350px) * 0.3);
       }
