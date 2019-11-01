@@ -141,7 +141,6 @@ body {
       }
       & tr th#head-genres {
         min-width: calc((100vw - 350px) * 0.1425);
-        // min-width: calc((100vw - 350px) * 0.119475);
       }
     }
     & tr th {
@@ -161,3 +160,6 @@ body {
   }
 }
 
+.active {
+  background-color: rgb(154, 240, 187);
+}

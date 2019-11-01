@@ -384,6 +384,8 @@ let play = function() {
       });
     });
     document.getElementById("name_artists").innerHTML = audioName[listNum];
+    console.log(listNum);
+    document.getElementById("record"+String(listNum+1)).classList.add("active")
   };
 };
 
@@ -402,6 +404,8 @@ let stop = function() {
     stopping = true;
     soundFile.stop(0);
     clearPlayer();
+
+    document.getElementById("record"+String(listNum+1)).classList.remove("active")
   }
 };
 
