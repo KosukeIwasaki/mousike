@@ -90,7 +90,6 @@ let clearPlayer = function() {
   document.getElementById("music-time").innerHTML = "00:00:00";
   playing = false;
   pausing = false;
-  stopping = true;
 }
 
 let sound = function(buffer) {
@@ -137,9 +136,9 @@ let sound = function(buffer) {
         if(!stopping) {
           if(listNum < list.length - 1) {
             listNum++;
-            play();
+            play(listNum);
           };
-        };        
+        };
       };
     });
   };
@@ -383,7 +382,6 @@ let play = function(listNum) {
     getAudioBuffer(bgm, function(buffer) {
       context.resume().then(function() {
         sound(buffer, false);
-        pausing = false;
         playerStatus();
         document.getElementById("seek-bar").max = parseFloat(buffer.duration);
         document.getElementById("music-time").innerHTML = parseTime(buffer.duration);
@@ -391,6 +389,9 @@ let play = function(listNum) {
     });
 
     document.getElementById("name_artists").innerHTML = document.getElementById("title"+String(listNum+1)).textContent;
+    if(listNum !== 0) {
+      document.getElementById(String(listNum)).classList.remove("active")
+    }
     document.getElementById(String(listNum+1)).classList.add("active")
   };
 };
