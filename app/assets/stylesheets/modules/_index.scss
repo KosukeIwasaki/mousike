@@ -135,22 +135,22 @@ body {
         min-width: calc((100vw - 350px) * 0.03);
       }
       & tr th#head-titles {
-        min-width: calc((100vw - 350px) * 0.25);
+        min-width: calc((100vw - 350px) * 0.26);
       }
       & tr th#head-artists {
         min-width: calc((100vw - 350px) * 0.15);
       }
       & tr th#head-album {
-        min-width: calc((100vw - 350px) * 0.15);
+        min-width: calc((100vw - 350px) * 0.225);
       }
       & tr th#head-album-artists {
-        min-width: calc((100vw - 350px) * 0.25);
+        min-width: calc((100vw - 350px) * 0.15);
       }
       & tr th#head-length {
-        min-width: calc((100vw - 350px) * 0.1);
+        min-width: calc((100vw - 350px) * 0.075);
       }
       & tr th#head-genres {
-        min-width: calc((100vw - 350px) * 0.1425);
+        min-width: calc((100vw - 350px) * 0.10);
       }
     }
     & tr th {

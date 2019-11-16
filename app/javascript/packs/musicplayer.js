@@ -347,13 +347,13 @@ let ID3Reader = function(){
 		}
 	})();
 
-	// // iD3v2かどうかを判定
-	// let isID3v2 = function(data){
-	// 	if (data[0] === ID3FrameID["ID3"][0] && data[1] === ID3FrameID["ID3"][1] && data[2] === ID3FrameID["ID3"][2]) {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// };
+	// iD3v2かどうかを判定
+	let isID3v2 = function(data){
+		if (data[0] === ID3FrameID["ID3"][0] && data[1] === ID3FrameID["ID3"][1] && data[2] === ID3FrameID["ID3"][2]) {
+			return true;
+		}
+		return false;
+	};
 
 	// ID3のヘッダーを判定
 	let readID3Header = function(data){
@@ -624,7 +624,10 @@ let ID3Reader = function(){
 		}
 		, getAPIC_binary: function(){
 			return ID3Frames.APIC.binary;
-		}
+    }
+    , getID3v2: function() {
+      return isID3v2(data);
+    }
 	};
 }();
 
@@ -712,21 +715,23 @@ function createImgElemInViewAPIC(src){
 // ID3タグの読み込み
 function get_metadata_mp3(value, k){
   let data = new Uint8Array(value);
-  ID3Reader.read(data);
+  if(ID3Reader.getID3v2(data)) {
+    ID3Reader.read(data);
   
-  m = k + 1;
-  document.getElementById("title" + String(m)).textContent = ID3Reader.getTIT2();
-  document.getElementById("artists" + String(m)).textContent = ID3Reader.getTPE1();
-  document.getElementById("album" + String(m)).textContent = ID3Reader.getTALB();
-  document.getElementById("album-artists" + String(m)).textContent = ID3Reader.getTPE2();
-  document.getElementById("genre" + String(m)).textContent = ID3Reader.getTCON();
+    m = k + 1;
+    document.getElementById("title" + String(m)).textContent = ID3Reader.getTIT2();
+    document.getElementById("artists" + String(m)).textContent = ID3Reader.getTPE1();
+    document.getElementById("album" + String(m)).textContent = ID3Reader.getTALB();
+    document.getElementById("album-artists" + String(m)).textContent = ID3Reader.getTPE2();
+    document.getElementById("genre" + String(m)).textContent = ID3Reader.getTCON();
 
-  if (ID3Reader.getAPIC_mimeType() !== "") {
-    let imgSrc = "data:" + ID3Reader.getAPIC_mimeType() + ";base64," + Base64.encode(ID3Reader.getAPIC_binary());
-    albumWork[k] = imgSrc;
-		createImgElemInViewAPIC(albumWork[0]);
-	}
-  document.getElementById("name_artists").innerHTML = document.getElementById("title1").textContent;
+    if (ID3Reader.getAPIC_mimeType() !== "") {
+      let imgSrc = "data:" + ID3Reader.getAPIC_mimeType() + ";base64," + Base64.encode(ID3Reader.getAPIC_binary());
+      albumWork[k] = imgSrc;
+      createImgElemInViewAPIC(albumWork[0]);
+    }
+    document.getElementById("name_artists").innerHTML = document.getElementById("title1").textContent;
+  }
 }
 
 // ファイルの読み込み
