@@ -315,25 +315,13 @@ let ID3Reader = function(){
   };
   
 	let ID3Frames = {
-    TIT2: ""
-    , TPE1: ""
-    , TALB: ""
-    , TPE2: ""
-    , TCON: ""
-		, APIC: {
-			mimeType: ""
-			, binary: null
+    TIT2: "", TPE1: "", TALB: "", TPE2: "", TCON: "", APIC: {
+      mimeType: "", binary: null
 		}
 	};
 
 	let ID3FrameID = {
-    ID3: null
-    , TIT2: null
-    , TPE1: null
-    , TALB: null
-    , TPE2: null
-    , TCON: null
-		, APIC: null
+    ID3: null, TIT2: null, TPE1: null, TALB: null, TPE2: null, TCON: null, APIC: null
   };
   
 	(function(){
@@ -603,29 +591,21 @@ let ID3Reader = function(){
 		read: function(data){
 			readID3Header(data);
 			readID3Frames(data);
-		}
-		, getTIT2: function(){
+		}, getTIT2: function(){
 			return ID3Frames.TIT2;
-		}
-		, getTPE1: function(){
+		}, getTPE1: function(){
 			return ID3Frames.TPE1;
-    }
-    , getTALB: function(){
+    }, getTALB: function(){
 			return ID3Frames.TALB;
-		}
-    , getTPE2: function(){
+		}, getTPE2: function(){
 			return ID3Frames.TPE2;
-    }
-    , getTCON: function(){
+    }, getTCON: function(){
 			return ID3Frames.TCON;
-		}
-		, getAPIC_mimeType: function(){
+		}, getAPIC_mimeType: function(){
 			return ID3Frames.APIC.mimeType;
-		}
-		, getAPIC_binary: function(){
+		}, getAPIC_binary: function(){
 			return ID3Frames.APIC.binary;
-    }
-    , getID3v2: function() {
+    }, getID3v2: function() {
       return isID3v2(data);
     }
 	};
@@ -634,13 +614,12 @@ let ID3Reader = function(){
 // Base64
 let Base64 = function(){
 
-	let _ENCODE_TABLE =  ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
-						, 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'
-						, 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd'
-						, 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'
-						, 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x'
-						, 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7'
-						, '8', '9', '+', '/'];
+  let _ENCODE_TABLE =  ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+    'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+  ];
 
 	let _GETA = "=";
 
@@ -777,7 +756,7 @@ let input = function() {
     fileReader[k] = new FileReader();
     let file = document.getElementById("file-upload-audio").files[k];
     fileReader[k].readAsArrayBuffer(file);
-    fileReader[k].onload = function(event) {
+    fileReader[k].onload = function() {
       let value = fileReader[k].result;
       data = new Uint8Array(value);
       get_metadata_flac(data, k);
