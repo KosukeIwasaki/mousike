@@ -751,6 +751,8 @@ render = function(){
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
   for(let i=0, len=spectrums.length; i<len; i++){
+    canvasContext.strokeStyle = "green";
+    canvasContext.fillStyle = "green";
     // 塗りつぶしの四角形を描く
     canvasContext.fillRect(i*10, canvas.height, 5, -spectrums[i] * 0.5);
   }
