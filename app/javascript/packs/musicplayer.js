@@ -12,11 +12,14 @@ let listNum = 0;
 let volumeControl = null;
 let tuneTitleList = [];
 let albumWork = [];
+let animationId;
+// let canvasContext;
 
 // AudioContextの作成
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 let context = new AudioContext();
 context.createGain = context.createGain || context.createGainNode;
+let analyser = context.createAnalyser();
 
 // Bufferへのデコード
 let getAudioBuffer = function(url, fn) {
@@ -82,7 +85,7 @@ let playerStatus = function() {
 }
 
 // プレイヤーの初期化
-let clearPlayer = function() {
+let clearPlayer = function(canvasContext) {
   dispTime = 0;
   displayTime(0);
   document.getElementById("seek-bar").value = 0;
@@ -91,6 +94,10 @@ let clearPlayer = function() {
   document.getElementById("music-time").innerHTML = "00:00:00";
   playing = false;
   pausing = false;
+
+  let canvas = document.getElementById("visualiser");
+  let CanvasContext = canvas.getContext('2d');
+  CanvasContext.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 let sound = function(buffer) {
@@ -98,7 +105,13 @@ let sound = function(buffer) {
     volumeControl = context.createGain();
   };
   let source = context.createBufferSource();
-  volumeControl.connect(context.destination);
+
+  // コンテキストとビジュアライザーを接続
+  analyser.connect(context.destination);
+
+  // ビジュアライザーとボリュームコントロールを接続
+  volumeControl.connect(analyser);
+
   source.buffer = buffer;
   source.stop = source.stop || source.noteOff;
 
@@ -116,6 +129,7 @@ let sound = function(buffer) {
     resumeTime = pauseTime;
   };
 
+  // ボリュームコントロールと出力点を接続
   source.connect(volumeControl);
   // 外部の関数からはsoundFileで処理を行うことにする
   soundFile = source;
@@ -713,6 +727,42 @@ function get_metadata_mp3(value, k){
   }
 }
 
+// ビジュアライザーの設定
+// 高速フーリエ変換の分割サイズ
+analyser.fftSize = 128;
+
+// ビジュアライザの描画
+render = function(){
+
+  // ビジュアライザの要素を取得
+  let canvas = document.getElementById("visualiser");
+
+  // canvas要素の描画コンテキストの作成
+  let canvasContext = canvas.getContext('2d');
+
+  // 符号なしのlong型でFFT（高速フーリエ変換）のサイズの半分の値を取得
+  canvas.setAttribute('width', analyser.frequencyBinCount * 10);
+  let spectrums = new Uint8Array(analyser.frequencyBinCount);
+
+  // 周波数データを引数として渡されたUint8Array配列(unsigned byte配列)へコピー
+  analyser.getByteFrequencyData(spectrums);
+
+  // 四角形の形にクリアする 
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+  for(let i=0, len=spectrums.length; i<len; i++){
+    // 塗りつぶしの四角形を描く
+    canvasContext.fillRect(i*10, canvas.height, 5, -spectrums[i] * 0.5);
+  }
+
+  if(pausing || playing) {
+    animationId = requestAnimationFrame(render);
+  } else {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+};
+
 // ファイルの読み込み
 let input = function() {
   clearPlayer();
@@ -724,7 +774,7 @@ let input = function() {
       audioName.push(document.getElementById("file-upload-audio").files[i].name.replace(/\.\w+$/, ""));
     };
   };
-
+  
   // 取得したファイルをテーブルに表示する
   let fileReader = [];
   for(let j = 0; j < document.getElementById("file-upload-audio").files.length; j++) {
@@ -788,6 +838,8 @@ let play = function(listNum) {
     getAudioBuffer(bgm, function(buffer) {
       context.resume().then(function() {
         sound(buffer, false);
+        // ビジュアライザーの描画を開始
+        animationId = requestAnimationFrame(render);
         playerStatus();
         document.getElementById("seek-bar").max = parseFloat(buffer.duration);
         document.getElementById("music-time").innerHTML = parseTime(buffer.duration);
