@@ -307,6 +307,7 @@ function get_metadata_flac(data, k) {
 
       // 画像（アートワーク）の取得
       case 6:
+        document.getElementById("album-work").src = "/assets/no-image-9406927235933d1db5dc5141cb0bf262374ff1a2744e6bac8ccdc72ff0362ea2.jpg"
 
       case 127:
         return -1;
@@ -699,7 +700,7 @@ let Base64 = function(){
 
 // APIC（画像の）読み込み
 function createImgElemInViewAPIC(src){
-	let img = document.getElementById("album-work");
+  let img = document.getElementById("album-work");
 	img.src = src;
   img.title = "coverImage";
   img.height = 200; 
@@ -849,7 +850,13 @@ let play = function(listNum) {
     });
 
     document.getElementById("name_artists").innerHTML = document.getElementById("title"+String(listNum+1)).textContent;
-    createImgElemInViewAPIC(albumWork[listNum]);
+
+    if(albumWork[listNum]) {
+      createImgElemInViewAPIC(albumWork[listNum])
+    } else {
+      document.getElementById("album-work").src = "/assets/no-image-9406927235933d1db5dc5141cb0bf262374ff1a2744e6bac8ccdc72ff0362ea2.jpg"
+    }
+    
     if(listNum !== 0) {
       document.getElementById(String(listNum)).classList.remove("active")
     }
