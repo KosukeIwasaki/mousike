@@ -303,7 +303,6 @@ function get_metadata_flac(data, k) {
         }
         document.getElementById("name_artists").innerHTML = document.getElementById("title1").textContent;
         i_data = i_skip;
-        break;
 
       // 画像（アートワーク）の取得
       case 6:
