@@ -303,11 +303,13 @@ function get_metadata_flac(data, k) {
         }
         document.getElementById("name_artists").innerHTML = document.getElementById("title1").textContent;
         i_data = i_skip;
+        break;
 
       // 画像（アートワーク）の取得
       case 6:
         document.getElementById("album-work").src = "/assets/no-image-9406927235933d1db5dc5141cb0bf262374ff1a2744e6bac8ccdc72ff0362ea2.jpg"
-
+        break;
+        
       case 127:
         return -1;
       default:
