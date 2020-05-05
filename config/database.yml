@@ -52,3 +52,4 @@ production:
   database: mousike_production
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
+  master_key: <%= ENV['RAILS_MASTER_KEY'] %>
